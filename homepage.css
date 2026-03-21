@@ -1,0 +1,92 @@
+@media (prefers-color-scheme: dark) {
+    #welcome {
+        color: deeppink;
+    }
+
+    #articles {
+        border-color: aquamarine;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    #welcome {
+        color: darkorchid;
+    }
+
+    #articles {
+        border-color: black;
+    }
+}
+
+@media (orientation: portrait) {
+
+    #welcome {
+        font-size: 2rem;
+    }
+
+    main div#mainPage {
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}
+
+@media (orientation: landscape) {
+
+    #welcome {
+        font-size: 3rem;
+    }
+
+    main div#mainPage {
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+}
+
+div#mainPage {
+    padding-bottom: 0.2em;
+}
+
+#welcome {
+    width: 100%;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: relative;
+    align-self: center;
+    font-size: 3rem;
+    left: 3%;
+    box-sizing: border-box;
+}
+
+main p {
+    text-align: center;
+    margin-top: 0;
+}
+
+#articles h2 {
+    margin: 0;
+    text-align: center;
+}
+
+#articles {
+    display: flex;
+    flex-direction: column;
+}
+
+#list {
+    display: grid;
+    text-align: center;
+    align-self: center;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+#list>* {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom-style: dotted;
+    border-width: 0.1em;
+}
+
+#list a {
+    text-decoration: none;
+}

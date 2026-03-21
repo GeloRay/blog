@@ -1,0 +1,177 @@
+html {
+    box-sizing: border-box;
+    min-height: 100vh;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+@media (prefers-color-scheme: dark) {
+    html {
+        background-color: black;
+    }
+
+    header {
+        border-bottom-width: 0.1rem;
+        border-bottom-style: solid;
+        border-bottom-color: grey;
+    }
+
+    main {
+        color: white;
+    }
+
+    main pre code, code {
+        color: black;
+    }
+
+    footer {
+        background-color: dimgrey;
+        color: azure;
+    }
+
+    #HomePageLink {
+        color: deeppink;
+        text-decoration: none;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    header {
+        background-color: whitesmoke;
+        border-bottom-width: 0.1rem;
+        border-bottom-style: solid;
+        border-bottom-color: white;
+    }
+
+    footer {
+        background-color: wheat;
+    }
+
+    #HomePageLink {
+        color: darkorchid;
+    }
+}
+
+@media (orientation: portrait) {
+
+    #HomePageLink {
+        font-size: 2rem;
+    }
+
+    main #mainPage,
+    main div#time {
+        margin-left: 1%;
+        margin-right: 1%;
+    }
+}
+
+@media (orientation: landscape) {
+
+    #HomePageLink {
+        font-size: 3rem;
+    }
+
+    main div#mainPage,
+    main div#time {
+        margin-left: 15%;
+        margin-right: 15%;
+    }
+}
+
+body {
+    margin: 0;
+    font-size: medium;
+}
+
+header {
+    width: 100%;
+}
+
+footer {
+    width: 100%;
+    text-align: center;
+    align-content: center;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+p {
+    line-height: 1.5;
+}
+
+main a,
+footer a {
+    transition-property: color, background-color;
+    transition-duration: 1s, 1s;
+    color: cornflowerblue;
+
+    &:visited {
+        color: cornflowerblue;
+    }
+
+    &:hover {
+        background-color: plum;
+        color: white;
+    }
+}
+
+code {
+    background-color: gainsboro;
+    tab-size: 4;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+blockquote,
+q {
+    color: green;
+    padding-left: 0.25rem;
+    border-left: 0.5em solid grey;
+    margin: 0.5rem auto 0.5em auto;
+}
+
+pre:has(code) {
+    background-color: gainsboro;
+    overflow-x: auto;
+}
+
+pre code {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+}
+
+#HomePageLink {
+    position: relative;
+    align-self: center;
+    left: 3%;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+figure figcaption {
+    color: grey;
+    text-align: center;
+}
+
+main div#mainPage {
+    max-width: 50em;
+    min-width: 70%;
+}
+
+main div#time {
+    padding-top: 0.1rem;
+    padding-bottom: 0.2rem;
+    color: grey;
+    text-align: right;
+}
