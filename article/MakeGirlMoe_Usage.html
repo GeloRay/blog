@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <header>
+        <a href="../index.html" id="HomePageLink">
+            <em>GeloRay's Blog</em>
+        </a>
+    </header>
+    <main>
+        <div id="mainPage">
+            <h1>MakeGirlMoe的使用体验</h1><blockquote>这篇博文似乎应该出现在2018年才对。</blockquote><p>MakeGirlMoe是一个极为古早的ACG图像生成模型，是用GAN（已经好久没听说过它了...）架构训练的。当时似乎也引起过一段时间的热议。这几年来顶尖文生图AI快速发展，底层原理从GAN进化到Diffsuion再进化到TransFormer。生成图片的精美度早已也不是这个老前辈能比的（当然资源占用也水涨船高）。今天，笔者想将它重新捡起来（主要是因为电脑性能太差跑不了现在的模型），看看它表现。</p><h2>部署</h2><p>笔者不打算使用它的<a href="https://makegirl.moe">在线版</a>，而是打算将它拉到本地部署使用。它的所有代码<a href="https://github.com/makegirlsmoe/makegirlsmoe_web">托管在GitHub上</a>，仓库包括了其在线版提供的几个模型。</p><p>拉取这个仓库需要你的<code>git</code>启用<code>git-lfs</code>拓展。你可以在<a href="https://git-lfs.com/">这里</a>下载<code>git-lfs</code>。对于nix系统，默认软件源里应该有这东西。完成安装后，执行（这个仓库非常大，记得进行网络配置）:</p><pre><code>git clone https://github.com/makegirlsmoe/makegirlsmoe_web/
+</code></pre><blockquote>上文已经提到，这个项目仓库里还存放了模型，有几个模型大小似乎超出了<code>git</code>默认的http缓冲区大小，建议修改git的http缓冲区大小。</blockquote><p>不出意外的话，它应该已经被clone到了本地。下文中的所有路径是相对于仓库在本地的根目录而言的。</p><p>MakeGirlMoe使用NodeJS，请提前安装。然后，执行<code>npm install</code>以下载依赖。</p><blockquote>只要你不作死把它部署到公网，报错可以忽略。</blockquote><p>接下来，我们需要对代码和其依赖进行一些修改，不然它可能跑不起来，详细如下：</p><ol><li> 将<code>src/Config.js</code>的第1行改为<code>var debug = true;</code></li><li> 将<code>node_modules/http-deceiver/lib/deceiver.js</code>第22行至第27行改为:</li></ol><pre><code>HTTPParser = require('http-parser-js').HTTPParser;
+methods = HTTPParser.methods;
+
+// v6
+if (!methods)
+    methods = require('http-parser-js').methods;
+</code></pre><p>改完之后，终端运行<code>npm start</code>，等一到二秒暖机，之后部署就完成了。</p><h2>使用</h2><p>默认情况下，MakeGirlMoe运行在<code>localhost:3000</code>下。浏览器访问此处，即可打开其UI。它的UI与在线版无异，就不展示了。</p><p>试着生成了几张图片，可以看看：<br/><figure><img src="https://i.imgur.com/4kcaLOF.png"><figcaption>眼角有点怪</figcaption></figure><figure><img src="https://i.imgur.com/e2iFMG7.png"><figcaption>这头是不是有点太大了</figcaption></figure><figure><img src="https://i.imgur.com/45Z9mUy.png"><figcaption>还行</figcaption></figure><figure><img src="https://i.imgur.com/Lt14znt.png"><figcaption>惊为天人</figcaption></figure><figure><img src="https://i.imgur.com/x6pNElN.png"><figcaption>初见端倪</figcaption></figure><figure><img src="https://i.imgur.com/8Ha3HwI.png"><figcaption>外神你好</figcaption></figure></p><p>从这几张图片可以看出用这些模型生成的图片的上下限差距极大，下完全不成人形，上可以作为一个尚可的头像。对于衣着、发饰、头发等位置，它的表现通常极差（手这种地方就更不用说了）。所以用这个AI就像在抽卡，运气不好就只有古神出现。此外，笔者更建议使用<code>Bouvarida</code>（256x256版本）模型，因为它输出的稳定性似乎更好，上限似乎也更高。</p><p>需要指出的是，随机噪声对其产生图片的质量影响极大，所以建议你保存一些观感还行的噪声，它是支持这么做的。</p><p>本来想做一下benmmark的，但是它生成图像即使在我这台轻薄本上（i5-1155，无独显,16G）也非常快，所以认为没有必要，遂放弃。稍微看了一眼内存占用量，不算浏览器，后端占用内存在200M至300M浮动，相对现在的AI来说非常轻量（当然，付出了质量的代价）。</p><p>就写到这里结束吧。</p>
+        </div>
+        <div id="time">
+            <i>Least Edited at 2026/4/6 8:34 Monday</i>
+        </div>
+    </main>
+    <footer>
+        Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+        <br />
+        Make with ❤
+        <br />
+        <a href="mailto:gusg6330@gmail.com" id="Contact">Contact</a> | <a href="https://github.com/GeloRay/blog">GitHub</a>
+    </footer>
+    <script src="./script.js" defer></script>
+</body>
+
+</html>

@@ -145,11 +145,7 @@ q {
 pre:has(code) {
     background-color: gainsboro;
     overflow-x: auto;
-}
-
-pre code {
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+    padding: 0.5rem 1.5rem;
 }
 
 #HomePageLink {
@@ -159,7 +155,7 @@ pre code {
     font-family: 'Courier New', Courier, monospace;
 }
 
-figure figcaption {
+figure {
     color: grey;
     text-align: center;
 }
