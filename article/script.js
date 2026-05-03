@@ -1,8 +1,8 @@
-"use strict"
-let title = document.querySelector("h1")
-if (title != null) {
-    document.querySelector("title").textContent = title.textContent
-}
-else {
-    document.querySelector("title").textContent = "无题"
-}
+"use strict";
+let imgs = document.querySelectorAll("img");
+imgs.forEach((v, k, p)=>{
+    if (v.alt != null && v.alt != undefined){
+        let introduction = document.createElement("section")
+        v.parentNode.insertBefore(introduction, v.nextSibling);
+    }
+});
