@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title></title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <header>
+        <a href="../index.html" id="HomePageLink">
+            <em>GeloRay's Blog</em>
+        </a>
+    </header>
+    <main>
+        <div id="mainPage">
+            <h1>一些问题</h1>
+<p>无论为了什么，记录一下。</p>
+<p>最近终于无法忍受Win11狗皮膏药般的附加功能广告和各种神奇Bug，意图跳船，所以给电脑装了个Fedora 44。</p>
+<p>我是第一次将自己的电脑迁移到Linux发行版上，虽然不指望可以开箱即用，但也没有解决疑难杂症的心理预期。但好巧不巧就给我碰上了麻烦事——进入系统后喇叭/声卡不工作，音频设备只有哑输出（Dummy Output）。</p>
+<p>我的设备是Huawei Matebook D14。声卡是<code>ESSX8336</code>（网上一搜大把被这个声卡坑的人）。</p>
+<p>执行<code>dmesg | grep audio</code>的输出没有保存下来，总之大概是下面这样：</p>
+<pre><code>No SOF firmware or/and typology file found
+sof_probe_err: -2
+</code></pre>
+<p>解决方法很简单，在<code>/etc/modprobe,d</code>下随便选一个<code>.conf</code>文件（当然更建议新建一个），然后加一行</p>
+<pre><code>options snd-intel-dspcfg dsp_driver=1
+</code></pre>
+<p>然后重启即可。这行配置好像是为了指示内核自动使用SOF驱动。在我这台电脑上，它<strong>似乎</strong>意味着禁用SOF，因为我没有再看到SOF驱动的输出。</p>
+<p>修好之后喇叭好像变小声了。</p>
+<h1>网络</h1>
+<p>折腾完喇叭后发现，电脑可以连上wifi，但是无法正常上网。ping了一下百度发现是域名解析有问题，那就是dns的问题了。一番排查发现可能<code>systemd-resolved</code>这个东西的问题，它会把默认的dns地址指向<code>127.0.0.53</code>。万幸KDE的网络管理支持手动控制dns，就将电脑的默认dns切到了阿里云的。为了速度（对称型的痛），还把ipv6关了，希望后续不出问题，</p>
+<h1>NFC 和 鼠标</h1>
+<p>Linux下的NFC设备（usb口）还算好处理，使用<code>libnfc</code>即可驱动。但是注意要把libnfc的配置文件里的那两行注释解除，不然<code>libnfc</code>无法识别设备。如果需要使用有攻击性的功能在Fedora下需要自行编译<code>mfcuk</code>和<code>mfoc</code>两个包（据说Kali之类的发行版源里有）。</p>
+<p>我的鼠标是G304，很不幸没有官方驱动，但是有相对差点的<code>piper</code>能用。<code>gHub-GUI</code>做得太糙了不评价。</p>
+<h2>碎碎念</h2>
+<p>也有几个月没写过博客了呢...</p>
+<p>Linux下的中文输入法和高分屏适配似乎都有点问题，而且Fedora是rpm系，很多软件的相关资源不太好找。</p>
+<p>虽然文字作业有信创版的wps充数，但是其他的东西（比如国产会议软件）还是缺乏rpm包。嫌麻烦的不要来，用Ubuntu好了。</p>
+        </div>
+        <div id="time">
+            <i>Least Edited at 2026/7/5 16: 8 Sunday</i>
+        </div>
+    </main>
+    <footer>
+        Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+        <br />
+        Make with ❤
+        <br />
+        <a href="mailto:gusg6330@gmail.com" id="Contact">Contact</a> | <a href="https://github.com/GeloRay/blog">GitHub</a>
+    </footer>
+    <script src="./script.js" defer></script>
+</body>
+
+</html>
