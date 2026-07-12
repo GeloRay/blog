@@ -171,3 +171,8 @@ main div#time {
     color: grey;
     text-align: right;
 }
+
+section {
+    color: grey;
+    text-align: center;
+}
