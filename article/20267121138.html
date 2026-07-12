@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>记llama.cpp的编译</title>
+    <link rel="stylesheet" href="./style.css" />
+</head>
+
+<body>
+    <header>
+        <a href="../index.html" id="HomePageLink">
+            <em>GeloRay's Blog</em>
+        </a>
+    </header>
+    <main>
+        <div id="mainPage">
+            <h1>记llama.cpp的编译</h1>
+<p>llama.cpp是一个推理框架，支持<strong>CPU</strong>和<strong>vulkan</strong>后端，而且（据说）性能比ollama更好。</p>
+<p>最近一时兴起，想在自己的电脑上跑起来<code>Qwen3.6</code>的35B版本，左看右看，ollama的vulkan后端不太稳定,而上vllm又有点杀鸡用牛刀的感觉（况且这玩意不支持图形API作后端），就选定了llama.cpp这个能支持核显的老古董作框架。考虑到软件源里可能没有这玩意，决定手动编译。</p>
+<h2>起·准备依赖</h2>
+<blockquote>
+<p>以下操作在Linux环境下进行。</p>
+</blockquote>
+<p>为了提升性能，我需要编译带有vulkan后端支持的llama.cpp。整体步骤还是很简单的。首先执行<code>vulkaninfo</code>看是否有输出，有输出的继续，无输出或报错的装驱动。</p>
+<p>之后在<a href="https://vulkan.lunarg.com/sdk/home">LunarG</a>下载vulkan sdk安装，一路cd过去然后<code>tar -xf</code>解压，解压之后cd进去，执行</p>
+<pre><code>source setup-env.sh
+</code></pre>
+<p>在<strong>不关闭终端且不另起终端</strong>的条件下继续操作。</p>
+<blockquote>
+<p>想关终端也不是不行，设置好<code>PATH</code>、<code>LD_LIBRARY_PATH</code>、<code>VK_LAYER_PATH</code>、<code>VK_ADD_LAYER_PATH</code>、<code>PKG_CONFIG_PATH</code>和<code>CMAKE_PREFIX_PATH</code>这几个环境变量就行。怎么配参考<a href="https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html">文档</a>。</p>
+</blockquote>
+<p>接下来是无趣的装依赖环节：</p>
+<pre><code>sudo dnf install  gcc gcc-c++ cmake spirv-headers-devel glslc xinput libXinerama xcb-util-cursor -y
+</code></pre>
+<h2>承·编译</h2>
+<p>克隆仓库，没什么好说的（现在的网络环境下，个人更建议使用ssh克隆，速度又快又稳定）。</p>
+<pre><code>git clone https://github.com/ggml-org/llama.cpp
+</code></pre>
+<p>也没什么好说的：</p>
+<pre><code>cd llama.cpp
+cmake -B build -DGGML_VULKAN=1
+cmake --build build --config Release
+</code></pre>
+<p>编译需要大约10min（4线程），可以先去喝杯茶。</p>
+<blockquote>
+<p>编译过程会报Warning，不用管。</p>
+</blockquote>
+<p>按这样编译的版本<strong>没有</strong>https支持，如果需要https，安装<code>openssl-devel</code>。如果需要加速编译，安装<code>ccache</code>或添加<code>-j</code>（我上了<code>-j 4</code>）。编译产物在<code>./build/bin</code>下。</p>
+<h2>转·拉取模型</h2>
+<p>我打算使用<code>Qwen3.6-35B-A3B</code>，首先在魔搭上拉模型（拉之前需要确保<code>git-lfs</code>正确安装）：</p>
+<pre><code>git clone https://www.modelscope.cn/Qwen/Qwen3.6-35B-A3B.git
+</code></pre>
+<p>拉取的速度很慢，可以先去喝杯茶。</p>
+<p>拉取后得到的<code>safetensor</code>文件是模型的本体，使用llama.cpp提供的<code>convert_hf_to_gguf.py</code>转成gguf文件后使用。缺依赖就跑<code>pip install</code>（这里有一个小坑：需要提前安装<code>python-devel</code>，否则numpy会缺依赖）。</p>
+<h2>合·推理</h2>
+<p>推理是很简单的</p>
+<pre><code>llama-cli -m /path/to/model -p PROMPT -ngl N
+</code></pre>
+<p>模型<strong>必须</strong>是gguf格式。<code>-ngl</code>参数指定在GPU上运行的层（ <em>layer</em> ）数（需要后端支持，默认为auto）。</p>
+<p>在我的设备上，推理速度达到了惊人的0.1token/s，几乎不可用。模型有一部分进了swap，可能是一个原因。推理过程占用RAM约12GB。</p>
+<p>看图：
+<img src="" alt=""></p>
+<h2>末</h2>
+<p>折腾才发现源里有...（<code>llama-cpp</code>）。</p>
+<h2>参考</h2>
+<ol>
+<li><a href="https://github.com/ggml-org/llama.cpp/blob/master/docs/build.md">Build llama.cpp locally</a></li>
+<li><a href="https://vulkan.lunarg.com/doc/sdk/latest/linux/getting_started.html">Getting Started with the Linux Tarball Vulkan SDK</a></li>
+</ol>
+
+        </div>
+        <div id="time">
+            <i>Least Edited at Sun Jul 12 2026 11:38:17 GMT+0800 (中国标准时间)</i>
+        </div>
+    </main>
+    <footer>
+        Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>
+        <br />
+        Make with ❤
+        <br />
+        <a href="mailto:gusg6330@gmail.com" id="Contact">Contact</a> | <a href="https://github.com/GeloRay/blog">GitHub</a>
+    </footer>
+    <script src="./script.js" defer></script>
+</body>
+
+</html>

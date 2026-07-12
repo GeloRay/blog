@@ -1,0 +1,31 @@
+User-agent: Googlebot
+User-agent: Googlebot-Image
+User-agent: Googlebot-Mobile
+User-agent: Googlebot-News
+User-agent: Googlebot-Video
+User-agent: Bingbot
+User-agent: BingPreview
+User-agent: Sogou
+User-agent: Sogou web spider
+User-agent: YandexBot
+User-agent: YandexImages
+User-agent: DuckDuckBot
+User-agent: Slurp
+User-agent: Yetibot
+User-agent: Yeti
+User-agent: SeznamBot
+User-agent: Applebot
+User-agent: facebookexternalhit
+User-agent: Twitterbot
+User-agent: LinkedInBot
+User-agent: Pinterestbot
+User-agent: WhatsApp
+User-agent: TelegramBot
+User-agent: Discordbot
+User-agent: Slackbot
+User-agent: SkypeUriPreview
+User-agent: ZoomBot
+Allow: /
+
+User-agent: *
+Disallow: /
