@@ -1,3 +1,7 @@
+@import url("https://fontsapi.zeoseven.com/69/main/result.css");
+@import url("https://fontsapi.zeoseven.com/285/main/result.css");
+@import url("https: //fontsapi.zeoseven.com/442/main/result.css");
+
 @media (prefers-color-scheme: dark) {
     #welcome {
         color: deeppink;
@@ -49,7 +53,7 @@ div#mainPage {
 
 #welcome {
     width: 100%;
-    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-family: 'Maple Mono NF CN', monospace;
     position: relative;
     align-self: center;
     font-size: 3rem;
@@ -90,4 +94,13 @@ main p {
 
 #list a {
     text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Noto Sans CJK';
 }

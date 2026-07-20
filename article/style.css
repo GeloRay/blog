@@ -1,3 +1,7 @@
+@import url("https://fontsapi.zeoseven.com/69/main/result.css");
+@import url("https://fontsapi.zeoseven.com/285/main/result.css");
+@import url("https: //fontsapi.zeoseven.com/442/main/result.css");
+
 html {
     box-sizing: border-box;
     min-height: 100vh;
@@ -24,7 +28,8 @@ html {
         color: white;
     }
 
-    main pre code, code {
+    main pre code,
+    code {
         color: black;
     }
 
@@ -130,8 +135,10 @@ footer a {
 
 code {
     background-color: gainsboro;
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
     tab-size: 4;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Maple Mono NF CN', monospace;
 }
 
 blockquote,
@@ -152,7 +159,7 @@ pre:has(code) {
     position: relative;
     align-self: center;
     left: 3%;
-    font-family: 'Courier New', Courier, monospace;
+    font-family: 'Maple Mono NF CN', monospace;
 }
 
 figure {
@@ -163,6 +170,16 @@ figure {
 main div#mainPage {
     max-width: 50em;
     min-width: 70%;
+    font-family: 'Noto Serif CJK', serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: 'Noto Sans CJK', sans-serif;
 }
 
 main div#time {
